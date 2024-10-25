@@ -4,6 +4,6 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USERNAME: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1243
       POSTGRES_DB: mini_twitter
