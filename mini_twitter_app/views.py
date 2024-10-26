@@ -6,28 +6,38 @@ from api.serializers import *
 
 class PersonCreateListView(generics.ListCreateAPIView):
     queryset = Person.objects.all()
-    serializer = PersonSerializer(queryset, many=True)
+    serializer_class = PersonSerializer
 
-class PersonRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+class PersonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Person.objects.all()
-    serializer = PersonSerializer(queryset, many=True)
+    serializer_class = PersonSerializer
 
 # POST
 
 class PostListCreateAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
-    serializer = PostSerializer(queryset, many=True)
+    serializer_class = PostSerializer
 
-class PostRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer = PostSerializer(queryset, many=True)
+    serializer_class = PostSerializer
 
 # LIKE
 
 class LikeListCreateAPIView(generics.ListCreateAPIView):
     queryset = Like.objects.all()
-    serializer = LikeSerializer(queryset, many=True)
+    serializer_class = LikeSerializer
 
-class LikeRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+class LikeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Like.objects.all()
-    serializer = LikeSerializer(queryset, many=True)
+    serializer_class = LikeSerializer
+
+# Follow
+
+class FollowListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+
+class FollowRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
