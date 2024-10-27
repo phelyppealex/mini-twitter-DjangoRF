@@ -8,9 +8,11 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class FollowSerializer(serializers.ModelSerializer):
+    following = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Follow
-        fields = '__all__'
+        fields = ['following', 'followed']
 
 class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
