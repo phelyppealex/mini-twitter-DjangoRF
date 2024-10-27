@@ -11,6 +11,12 @@ class UserProfile(models.Model):
         if not self.name:
             self.name = self.username
         return super().save(*args, **kwargs)
+    
+    def follower_count(self):
+        return self.followed_set.count()
+    
+    def following_count(self):
+        return self.following_set.count()
 
     def __str__(self):
         return self.username
@@ -26,6 +32,9 @@ class Post(models.Model):
         to_field='username'
     )
 
+    def liked_count(self):
+        return self.liked_by.count()
+    
     def __str__(self):
         return f"{self.text_content}"
 
@@ -42,7 +51,13 @@ class Like(models.Model):
         null=False,
         blank=False,
         on_delete=models.CASCADE,
+        related_name='liked_by'
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['person', 'post'], name='unique_like')
+        ]
 
     def __str__(self):
         return f"{self.person} liked {self.post}"
@@ -65,6 +80,11 @@ class Follow(models.Model):
         to_field='username',
         related_name='followed_set'
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['following', 'followed'], name='unique_follow')
+        ]
 
     def __str__(self):
         return f"{self.following} follows {self.followed}"
