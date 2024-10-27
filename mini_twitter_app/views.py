@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from mini_twitter_app.models import *
 from api.serializers import *
 
@@ -15,11 +15,12 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = StandardPageNumberPagination
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
+    
 # LIKE
 
 class LikeListCreateAPIView(generics.ListCreateAPIView):
