@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-class Person(models.Model):
+class UserProfile(models.Model):
     username = models.CharField(max_length=30, primary_key=True)
     name = models.CharField(max_length=30, blank=True)
-    email = models.CharField(max_length=320, blank=False)
-    password = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now=True)
+    system_user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
     def save(self, *args, **kwargs):
         if not self.name:
@@ -18,7 +19,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     text_content = models.CharField(max_length=1000)
     author = models.ForeignKey(
-        Person,
+        UserProfile,
         null=False,
         blank=False,
         on_delete=models.CASCADE,
@@ -30,7 +31,7 @@ class Post(models.Model):
 
 class Like(models.Model):
     person = models.ForeignKey(
-        Person,
+        UserProfile,
         null=False,
         blank=False,
         on_delete=models.CASCADE,
@@ -48,16 +49,16 @@ class Like(models.Model):
 
 class Follow(models.Model):
     following = models.ForeignKey(
-        Person,
+        UserProfile,
         null=False,
         blank=False,
         on_delete=models.CASCADE,
         to_field='username',
         related_name='following_set',
-        
+
     )
     followed = models.ForeignKey(
-        Person,
+        UserProfile,
         null=False,
         blank=False,
         on_delete=models.CASCADE,

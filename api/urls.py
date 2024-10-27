@@ -5,8 +5,8 @@ urlpatterns = [
     path('post/', PostListCreateAPIView.as_view(), name='post-create-list'),
     path('post/<int:pk>/', PostRetrieveUpdateDestroyAPIView.as_view(), name='post-detail-view'),
 
-    path('person/', PersonCreateListView.as_view(), name='person-create-list'),
-    path('person/<str:pk>/', PersonRetrieveUpdateDestroyAPIView.as_view(), name='person-detail-view'),
+    path('user-profile/', UserProfileCreateListView.as_view(), name='person-create-list'),
+    path('user-profile/<str:pk>/', UserProfileRetrieveUpdateDestroyAPIView.as_view(), name='person-detail-view'),
     
     path('like/', LikeListCreateAPIView.as_view(), name='like-create-list'),
     path('like/<int:pk>/', LikeRetrieveUpdateDestroyAPIView.as_view(), name='like-detail-view'),

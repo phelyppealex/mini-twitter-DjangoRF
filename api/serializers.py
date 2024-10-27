@@ -1,29 +1,36 @@
 from rest_framework import serializers
-from mini_twitter_app.models import Person, Like, Post, Follow
+from django.contrib.auth.models import User
+from mini_twitter_app.models import Like, Post, Follow, UserProfile
 
-class PersonSerializer(serializers.ModelSerializer):
+class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Person
-        fields = '__all__'
+        model = User
+        fields = ['id', 'email']
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email']
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        user_profile = UserProfile.objects.create(system_user=user, username=validated_data['username'], )
+        user_profile.save()
+
+        return user
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
-
-    # def create(self, validated_data):
-    #     # Extraindo o username do author
-    #     author_username = validated_data.pop('author', None)
-    #     author = None
-        
-    #     if author_username:
-    #         try:
-    #             author = Person.objects.get(username=author_username)
-    #         except Person.DoesNotExist:
-    #             raise serializers.ValidationError("Author does not exist.")
-        
-    #     validated_data['author'] = author
-    #     return super().create(validated_data)
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,3 +41,10 @@ class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follow
         fields = '__all__'
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    system_user = PublicUserSerializer(read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'name', 'created', 'system_user']
