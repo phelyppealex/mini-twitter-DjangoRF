@@ -5,21 +5,22 @@ from mini_twitter_app.models import *
 from api.serializers import *
 
 class StandardPageNumberPagination(PageNumberPagination):
-    page_size = 15
+    page_size = 10
     page_size_query_param = 'page_size'
-    max_page_size = 15
+    max_page_size = 100
 
 # POST
 
 class PostListCreateAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializerRequest
     pagination_class = StandardPageNumberPagination
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializerRequest
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     
 # LIKE
 
@@ -51,7 +52,21 @@ class FollowRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 class UserProfileCreateListView(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class UserProfileRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class UserFeedView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializerResponse
+    pagination_class = StandardPageNumberPagination
+
+    def get_queryset(self):
+        user_profile = self.request.user.profile
+        following_profiles = user_profile.following_set.values_list('followed', flat=True)
+        
+        return Post.objects.filter(author__username__in=following_profiles).order_by('-created')
