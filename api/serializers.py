@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from mini_twitter_app.models import Like, Post, Follow, UserProfile
+from like_app.models import Like
+from follow_app.models import Follow
+from user_profile_app.models import UserProfile
+from post_app.models import Post
+
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:

@@ -41,9 +41,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     
-    'mini_twitter_app',
     'api',
-    'authentication'
+    'authentication',
+
+    'user_profile_app',
+    'post_app',
+    'like_app',
+    'follow_app',
+    'mini_twitter_app',
 ]
 
 MIDDLEWARE = [

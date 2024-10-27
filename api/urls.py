@@ -1,5 +1,8 @@
 from django.urls import path
-from mini_twitter_app.views import *
+from post_app.views import *
+from user_profile_app.views import *
+from like_app.views import *
+from follow_app.views import *
 
 urlpatterns = [
     path('post/', PostListCreateAPIView.as_view(), name='post-create-list'),
