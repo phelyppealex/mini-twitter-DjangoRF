@@ -5,8 +5,8 @@ from post_app.models import Post
 class Like(models.Model):
     person = models.ForeignKey(
         UserProfile,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
         to_field='username'
     )

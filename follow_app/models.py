@@ -4,12 +4,11 @@ from user_profile_app.models import UserProfile
 class Follow(models.Model):
     following = models.ForeignKey(
         UserProfile,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
         to_field='username',
         related_name='following_set',
-
     )
     followed = models.ForeignKey(
         UserProfile,

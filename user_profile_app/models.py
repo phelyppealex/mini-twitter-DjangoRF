@@ -5,7 +5,7 @@ from django.db import models
 class UserProfile(models.Model):
     username = models.CharField(max_length=30, primary_key=True)
     name = models.CharField(max_length=30, blank=True)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     system_user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
     def save(self, *args, **kwargs):
