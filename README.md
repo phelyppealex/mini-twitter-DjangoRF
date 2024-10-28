@@ -54,3 +54,9 @@ python3 manage.py runserver
 ~~~
 python manage.py runserver
 ~~~
+
+## Useful links
+
+- [API documentation](https://documenter.getpostman.com/view/39288021/2sAY4skQm5)
+
+- [Entity-Relationship Diagram](https://www.canva.com/design/DAGUPFcmU2o/r1ZTncVUJxqszoq11I8Ztw/edit?utm_content=DAGUPFcmU2o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
